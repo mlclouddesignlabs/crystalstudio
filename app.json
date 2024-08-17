@@ -16,12 +16,20 @@
       "supportsTablet": true
     },
     "android": {
+      "package": "com.mlclouddesignlabs.crystalstudio",
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       }
     },
     "web": {
+      "build": {
+        "babel": {
+          "include": [
+            "react-native-web"
+          ]
+        }
+      },
       "bundler": "metro",
       "output": "static",
       "favicon": "./assets/images/favicon.png"
@@ -31,6 +39,14 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "f24f156f-025a-4b0b-8783-c2357b032444"
+      }
     }
   }
 }
