@@ -152,15 +152,7 @@ function CodeTypeValueLandingPage() {
  
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>{headertext}</Text>
-      {/*
-      <View style={styles.toolbar}>
-        <Button title="Add" onPress={OnAddClickHandler} />
-        <Button title="Edit" onPress={onEditButtonClick} />
-        <Button title="Delete" onPress={onDeleteButtonClick} />
-      </View>
-  */}
-      <View style={styles.content}>
+      <Text style={styles.header}>{headertext}</Text>         
       <Dropdown
         style={styles.dropdown}
         data={dummyCodeTypes}
@@ -168,9 +160,7 @@ function CodeTypeValueLandingPage() {
         valueField="ShortCode"
         placeholder="Select an option"        
         onChange={item => setSelectedCT(item)}
-      />
-      </View>
-      <View style={styles.content}>        
+      />                 
         <DataTable>
           <DataTable.Header>
             <DataTable.Title>
@@ -189,8 +179,7 @@ function CodeTypeValueLandingPage() {
           </DataTable.Row>
         ))}      
         </DataTable>      
-      </View>
-    </View>
+      </View>    
   );
 }
 
