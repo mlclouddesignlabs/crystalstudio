@@ -1,4 +1,4 @@
 export interface CodeTypes{
-    ShortCode:string;
-    Description:string;
+    shortCode:string;
+    description:string;
 }
