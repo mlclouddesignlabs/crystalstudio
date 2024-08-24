@@ -1,7 +1,6 @@
 import React from "react";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { Link, Tabs } from "expo-router";
-import { Pressable } from "react-native";
 
 import Colors from "@/constants/Colors";
 import { useColorScheme } from "@/components/useColorScheme";
@@ -61,7 +60,7 @@ export default function TabLayout() {
         options={{
           title: "Code Types",
           tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
-          headerRight: () => <Text>H</Text>,
+          // headerRight: () => <Text>H</Text>,
         }}
       />
     </Tabs>

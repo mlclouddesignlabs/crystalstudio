@@ -1,12 +1,12 @@
-import { StyleSheet } from "react-native";
 import React from "react";
+import { StyleSheet } from "react-native";
 import {
   Button,
-  Icon,
-  TextInput,
-  Text,
-  Surface,
   Divider,
+  Icon,
+  Surface,
+  Text,
+  TextInput,
 } from "react-native-paper";
 
 import { ICodeType } from "../CodeTypes/types";

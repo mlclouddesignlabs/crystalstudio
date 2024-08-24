@@ -1,6 +1,4 @@
-import CodeTypes from ".";
-
-export interface ICodeType{
-    shortCode:string;
-    description:string;
+export interface ICodeType {
+  shortCode: string;
+  description: string;
 }

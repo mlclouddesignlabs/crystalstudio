@@ -8,7 +8,8 @@ import {
   Surface,
   Divider,
 } from "react-native-paper";
-import { CodeTypesFormFields, ICodeType } from "./types";
+import { CodeTypesFormFields } from "./types";
+import { ICodeType } from "../CodeTypes/types";
 
 interface ICodeTypesProps {}
 

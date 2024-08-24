@@ -10,30 +10,60 @@ class Fetcher {
     if (this.instance) {
       return this.instance;
     }
-    let baseURL: string = "https://jsonplaceholder.typicode.com/todos/";
-    //let baseURL: string = "http://localhost:8080";
-    //let baseURL: string = "http://10.0.2.2:8080";
-    this.instance = new Fetcher(baseURL);
+    // let baseURL: string = "http://192.168.0.151";
+    //let baseURL: string = "http://localhost";
+    let baseURL: string = "http://10.0.2.2";
+    let port: number = 3000;
+
+    this.instance = new Fetcher(`${baseURL}:${port}`);
     return this.instance;
   }
 
   async get(url: string) {
     try {
-      const completeURL = `${this.baseUrl}`;
-      console.log("inside GET requesting - ", completeURL);
+      const completeURL = `${this.baseUrl}${url}`;
       const response = await fetch(completeURL);
-      console.log("Back From Service Call");
-      console.log(response);
       if (response.status === 200) {
+        console.log("request - GET - ", completeURL, " - SUCCESS");
         return response.json();
       } else {
-        console.log(response.text);
-        console.log(response.url);
+        console.log(response);
+        throw new Error(`Service Error : Status Code - ${response.status}`);
       }
     } catch (ex) {
       console.log("ERROR");
       console.log(ex);
     }
+  }
+
+  async post(url: string, data: any) {
+    try {
+      const completeURL = `${this.baseUrl}${url}`;
+      const response = await fetch(completeURL, {
+        method: "POST",
+        body: JSON.stringify(data),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (response.status === 200) {
+        console.log("request - GET - ", completeURL, " - SUCCESS");
+        return response.json();
+      } else {
+        console.log(response);
+        throw new Error(`Service Error : Status Code - ${response.status}`);
+      }
+    } catch (ex) {
+      console.log("ERROR");
+      console.log(ex);
+    }
+  }
+
+  async delete(url: string) {
+    const response = await fetch(`${this.baseUrl}${url}`, {
+      method: "DELETE",
+    });
+    return response.json();
   }
 
   async put(url: string, data: any) {
@@ -43,24 +73,6 @@ class Fetcher {
       headers: {
         "Content-Type": "application/json",
       },
-    });
-    return response.json();
-  }
-
-  async post(url: string, data: any) {
-    const response = await fetch(`${this.baseUrl}${url}`, {
-      method: "POST",
-      body: JSON.stringify(data),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    return response.json();
-  }
-
-  async delete(url: string) {
-    const response = await fetch(`${this.baseUrl}${url}`, {
-      method: "DELETE",
     });
     return response.json();
   }
