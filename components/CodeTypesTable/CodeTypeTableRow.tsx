@@ -13,18 +13,29 @@ import { View } from "../Themed";
 
 interface ICodeTypeTableRowProps {
   codeType: ICodeType;
+  onEditClick: (codeType: ICodeType) => void;
+  onDeleteClick: (codeType: ICodeType) => void;
 }
 
 const CodeTypeTableRow: React.FC<ICodeTypeTableRowProps> = React.memo(
-  ({ codeType }) => {
+  ({ codeType, onEditClick, onDeleteClick }) => {
     const [visible, setVisible] = React.useState(false);
 
     const openMenu = () => setVisible(true);
-
     const closeMenu = () => setVisible(false);
 
+    const handleEditClick = () => {
+      onEditClick(codeType);
+      closeMenu();
+    };
+
+    const handleDeleteClick = () => {
+      onDeleteClick(codeType);
+      closeMenu();
+    };
+
     return (
-      <DataTable.Row key={codeType.id} style={styles.dataTableRow}>
+      <DataTable.Row style={styles.dataTableRow}>
         <DataTable.Cell maxFontSizeMultiplier={6} style={styles.denseCol}>
           <Text variant="bodySmall" style={styles.titleText}>
             {codeType.shortCode}
@@ -47,14 +58,14 @@ const CodeTypeTableRow: React.FC<ICodeTypeTableRowProps> = React.memo(
             <Menu.Item
               dense
               leadingIcon="pencil"
-              onPress={() => {}}
+              onPress={handleEditClick}
               title="Edit"
             />
             <Divider />
             <Menu.Item
               dense
               leadingIcon="delete"
-              onPress={() => {}}
+              onPress={handleDeleteClick}
               title="Delete"
             />
           </Menu>

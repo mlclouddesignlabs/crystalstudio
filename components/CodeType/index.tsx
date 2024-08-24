@@ -14,8 +14,15 @@ const CodeType: React.FC<ICodeTypeInputsProps> = () => {
   const [isCodeInputsModalVisible, setIsCodeInputsModalVisible] =
     React.useState(false);
   const [showSnackBar, setShowSnackBar] = React.useState(false);
+  const [selCodeType, setSelCodeType] = React.useState<ICodeType | undefined>(
+    undefined
+  );
   const [codeTypes, setCodeTypes] = React.useState<ICodeType[]>([]);
   const [codeTypesOrig, setCodeTypesOrig] = React.useState<ICodeType[]>([]);
+
+  const showCodeTypeInputs = () => setIsCodeInputsModalVisible(true);
+  const hideCodeTypeInputs = () => setIsCodeInputsModalVisible(false);
+  const dismissSnackBar = () => setShowSnackBar(false);
 
   useEffect(() => {
     fetchCodeType();
@@ -29,11 +36,45 @@ const CodeType: React.FC<ICodeTypeInputsProps> = () => {
     });
   };
 
-  const updateCodeType = (updatedCodeType: ICodeType) => {
-    return SVCHelper.post("/codeTypes", updatedCodeType).then((data) => {
-      setCodeTypes([{ ...data }, ...codeTypes]);
+  const createCodeType = (codeType: ICodeType) => {
+    return SVCHelper.post("/codeTypes", codeType).then((data) => {
+      let modifiedCodeTypes = [{ ...data }, ...codeTypes];
+      setCodeTypes(modifiedCodeTypes);
       setShowSnackBar(true);
     });
+  };
+
+  const updateCodeType = (codeType: ICodeType) => {
+    return SVCHelper.put(`/codeTypes/${codeType.id}`, codeType).then((data) => {
+      let modifiedCodeTypes = [...codeTypes];
+      let index = modifiedCodeTypes.findIndex(({ id }) => id === codeType.id);
+      if (index >= 0) {
+        modifiedCodeTypes[index] = { ...data };
+      }
+      setCodeTypes(modifiedCodeTypes);
+      setSelCodeType(undefined);
+      setShowSnackBar(true);
+    });
+  };
+
+  const deleteCodeType = (codeType: ICodeType) => {
+    return SVCHelper.delete(`/codeTypes/${codeType.id}`).then((data) => {
+      let modifiedCodeTypes = [...codeTypes];
+      let index = modifiedCodeTypes.findIndex(({ id }) => id === codeType.id);
+      if (index >= 0) {
+        modifiedCodeTypes.splice(index, 1);
+        setCodeTypes(modifiedCodeTypes);
+      }
+    });
+  };
+
+  const handleSaveCodeType = (codeType: ICodeType) => {
+    return codeType.id ? updateCodeType(codeType) : createCodeType(codeType);
+  };
+
+  const handleEditClick = (codeType: ICodeType) => {
+    setSelCodeType(codeType);
+    showCodeTypeInputs();
   };
 
   const handleFilteringCodeTypes = (key: string) => {
@@ -53,10 +94,6 @@ const CodeType: React.FC<ICodeTypeInputsProps> = () => {
     );
   };
 
-  const showCodeTypeInputs = () => setIsCodeInputsModalVisible(true);
-  const hideCodeTypeInputs = () => setIsCodeInputsModalVisible(false);
-  const dismissSnackBar = () => setShowSnackBar(false);
-
   return (
     <View style={styles.container}>
       <Portal>
@@ -65,17 +102,22 @@ const CodeType: React.FC<ICodeTypeInputsProps> = () => {
           onDismiss={hideCodeTypeInputs}
         >
           <CodeTypeInputs
-            onSaveClick={updateCodeType}
+            codeType={selCodeType}
+            onSaveClick={handleSaveCodeType}
             dismissModal={hideCodeTypeInputs}
           />
         </Modal>
       </Portal>
       <CodeTypeFilter onFilter={handleFilteringCodeTypes} />
       {/* <CodeTypesList codeTypes={codeTypes} /> */}
-      <CodeTypeTable codeTypes={codeTypes} />
+      <CodeTypeTable
+        codeTypes={codeTypes}
+        onEditClick={handleEditClick}
+        onDeleteClick={deleteCodeType}
+      />
       <Surface elevation={2} style={styles.buttonContainer}>
         <Snackbar visible={showSnackBar} onDismiss={dismissSnackBar}>
-          Code Type added successfully.
+          Code Type added/updated successfully.
         </Snackbar>
         <Button style={{ marginTop: 30 }} onPress={showCodeTypeInputs}>
           Add Code Types

@@ -7,10 +7,12 @@ import CodeTypeTableRow from "./CodeTypeTableRow";
 
 interface ICodeTypeTableProps {
   codeTypes: ICodeType[];
+  onEditClick: (codeType: ICodeType) => void;
+  onDeleteClick: (codeType: ICodeType) => void;
 }
 
 const CodeTypeTable: React.FC<ICodeTypeTableProps> = React.memo(
-  ({ codeTypes }) => {
+  ({ codeTypes, onEditClick, onDeleteClick }) => {
     return (
       <Surface elevation={0} style={styles.container}>
         <DataTable style={styles.dataTable}>
@@ -31,7 +33,12 @@ const CodeTypeTable: React.FC<ICodeTypeTableProps> = React.memo(
           </DataTable.Header>
           <ScrollView>
             {codeTypes?.map((codeType) => (
-              <CodeTypeTableRow codeType={codeType} />
+              <CodeTypeTableRow
+                key={codeType.id}
+                codeType={codeType}
+                onEditClick={onEditClick}
+                onDeleteClick={onDeleteClick}
+              />
             ))}
           </ScrollView>
         </DataTable>

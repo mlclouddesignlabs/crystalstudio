@@ -13,29 +13,33 @@ import { ICodeType } from "../CodeType/types";
 import { CodeTypeFormFields } from "./types";
 
 interface ICodeTypeInputsProps {
+  codeType?: ICodeType;
   onSaveClick: (updatedCodeType: ICodeType) => Promise<void>;
   dismissModal: () => void;
 }
 
 const CodeTypeInputs: React.FC<ICodeTypeInputsProps> = ({
+  codeType,
   onSaveClick,
   dismissModal,
 }) => {
-  const [codeType, setCodeType] = React.useState<ICodeType>({
-    shortCode: "",
-    description: "",
-  });
+  const [newCodeType, setNewCodeType] = React.useState<ICodeType>(
+    codeType || {
+      shortCode: "",
+      description: "",
+    }
+  );
 
   const handleChange = (val: string, fieldName: CodeTypeFormFields) => {
-    const newCodeType = {
-      ...codeType,
+    const updatedCodeType = {
+      ...newCodeType,
     };
-    newCodeType[fieldName] = val;
-    setCodeType(newCodeType);
+    updatedCodeType[fieldName] = val;
+    setNewCodeType(updatedCodeType);
   };
 
   const handleSavePress = () => {
-    onSaveClick(codeType).then(() => {
+    onSaveClick(newCodeType).then(() => {
       dismissModal();
     });
   };
@@ -50,7 +54,7 @@ const CodeTypeInputs: React.FC<ICodeTypeInputsProps> = ({
       </Surface>
       <TextInput
         label="Short Code"
-        value={codeType.shortCode}
+        value={newCodeType.shortCode}
         onChangeText={(text) => handleChange(text, "shortCode")}
         style={styles.inputs}
       />
@@ -58,7 +62,7 @@ const CodeTypeInputs: React.FC<ICodeTypeInputsProps> = ({
         multiline
         numberOfLines={6}
         label="Description"
-        value={codeType.description}
+        value={newCodeType.description}
         onChangeText={(text) => handleChange(text, "description")}
         style={styles.inputs}
       />

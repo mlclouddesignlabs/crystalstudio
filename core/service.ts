@@ -63,21 +63,48 @@ class Fetcher {
   }
 
   async delete(url: string) {
-    const response = await fetch(`${this.baseUrl}${url}`, {
-      method: "DELETE",
-    });
-    return response.json();
+    try {
+      const completeURL = `${this.baseUrl}${url}`;
+      const response = await fetch(completeURL, {
+        method: "DELETE",
+      });
+      if (response.status === 200) {
+        console.log("request - DELETE - ", completeURL, " - SUCCESS");
+        return response.json();
+      } else {
+        console.log(response);
+        throw new Error(`Service Error : Status Code - ${response.status}`);
+      }
+    } catch (ex) {
+      console.log("ERROR");
+      console.log(ex);
+    }
   }
 
   async put(url: string, data: any) {
-    const response = await fetch(`${this.baseUrl}${url}`, {
-      method: "PUT",
-      body: JSON.stringify(data),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    return response.json();
+    try {
+      const completeURL = `${this.baseUrl}${url}`;
+      const putReqOpt = {
+        method: "PUT",
+        body: JSON.stringify(data),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
+      const response = await fetch(completeURL, putReqOpt);
+      if (response.status === 200 || response.status === 201) {
+        console.log("request - PUT - ", completeURL, " - SUCCESS");
+        return response.json();
+      } else {
+        console.log(response);
+        console.log("Put Req Payload");
+        console.log(putReqOpt);
+        throw new Error(`Service Error : Status Code - ${response.status}`);
+      }
+    } catch (ex) {
+      console.log("ERROR");
+      console.log(ex);
+    }
   }
 }
 
