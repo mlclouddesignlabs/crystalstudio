@@ -1,7 +1,7 @@
 import React from "react";
-import { FlatList, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 import { Avatar, Card, Text } from "react-native-paper";
-import { ICodeType } from "../CodeTypes/types";
+import { ICodeType } from "../CodeType/types";
 
 interface ICodeTypesListItemProps {
   codeType: ICodeType;

@@ -1,5 +1,5 @@
 import React from "react";
-import { ICodeType } from "../CodeTypes/types";
+import { ICodeType } from "../CodeType/types";
 import { DataTable, Surface, TextInput, Text } from "react-native-paper";
 import { ScrollView } from "react-native";
 import { FlatList, StyleSheet } from "react-native";

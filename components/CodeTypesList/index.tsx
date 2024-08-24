@@ -1,7 +1,7 @@
 import React from "react";
 import { FlatList, StyleSheet } from "react-native";
 import { Surface } from "react-native-paper";
-import { ICodeType } from "../CodeTypes/types";
+import { ICodeType } from "../CodeType/types";
 import CodeTypesListItem from "./CodeTypesListItem";
 
 interface ICodeTypesListProps {

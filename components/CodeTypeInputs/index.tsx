@@ -9,15 +9,15 @@ import {
   TextInput,
 } from "react-native-paper";
 
-import { ICodeType } from "../CodeTypes/types";
-import { CodeTypesFormFields } from "./types";
+import { ICodeType } from "../CodeType/types";
+import { CodeTypeFormFields } from "./types";
 
-interface ICodeTypesProps {
+interface ICodeTypeInputsProps {
   onSaveClick: (updatedCodeType: ICodeType) => Promise<void>;
   dismissModal: () => void;
 }
 
-const CodeTypes: React.FC<ICodeTypesProps> = ({
+const CodeTypeInputs: React.FC<ICodeTypeInputsProps> = ({
   onSaveClick,
   dismissModal,
 }) => {
@@ -26,7 +26,7 @@ const CodeTypes: React.FC<ICodeTypesProps> = ({
     description: "",
   });
 
-  const handleChange = (val: string, fieldName: CodeTypesFormFields) => {
+  const handleChange = (val: string, fieldName: CodeTypeFormFields) => {
     const newCodeType = {
       ...codeType,
     };
@@ -72,10 +72,6 @@ const CodeTypes: React.FC<ICodeTypesProps> = ({
 
 const styles = StyleSheet.create({
   container: {
-    // flex: 1,
-    // flexDirection: "column",
-    // justifyContent: "flex-start",
-
     paddingVertical: 10,
     paddingHorizontal: 10,
   },
@@ -95,4 +91,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CodeTypes;
+export default CodeTypeInputs;

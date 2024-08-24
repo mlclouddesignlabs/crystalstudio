@@ -1,1 +1,1 @@
-export type CodeTypesFormFields = "shortCode" | "description";
+export type CodeTypeFormFields = "shortCode" | "description";

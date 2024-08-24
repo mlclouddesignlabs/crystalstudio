@@ -1,24 +1,16 @@
 import SVCHelper from "@/core/service";
 import React, { useEffect } from "react";
 import { StyleSheet } from "react-native";
-import {
-  Button,
-  Modal,
-  Portal,
-  Snackbar,
-  Surface,
-  TextInput,
-} from "react-native-paper";
+import { Button, Modal, Portal, Snackbar, Surface } from "react-native-paper";
+import CodeTypeFilter from "../CodeTypeFilter";
 import CodeTypeInputs from "../CodeTypeInputs";
-import CodeTypesList from "../CodeTypesList";
+import CodeTypeTable from "../CodeTypesTable";
 import { View } from "../Themed";
 import { ICodeType } from "./types";
-import CodeTypeTable from "../CodeTypesTable";
-import CodeTypeFilter from "../CodeTypeFilter";
 
 interface ICodeTypeInputsProps {}
 
-const CodeTypes: React.FC<ICodeTypeInputsProps> = () => {
+const CodeType: React.FC<ICodeTypeInputsProps> = () => {
   const [isCodeInputsModalVisible, setIsCodeInputsModalVisible] =
     React.useState(false);
   const [showSnackBar, setShowSnackBar] = React.useState(false);
@@ -26,10 +18,10 @@ const CodeTypes: React.FC<ICodeTypeInputsProps> = () => {
   const [codeTypesOrig, setCodeTypesOrig] = React.useState<ICodeType[]>([]);
 
   useEffect(() => {
-    fetchCodeTypes();
+    fetchCodeType();
   }, []);
 
-  const fetchCodeTypes = () => {
+  const fetchCodeType = () => {
     // console.log(Constants.manifest2);
     SVCHelper.get("/codeTypes?_sort=id&_order=desc").then((data) => {
       setCodeTypes(data);
@@ -103,4 +95,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CodeTypes;
+export default CodeType;

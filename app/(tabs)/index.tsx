@@ -1,4 +1,4 @@
-import CodeTypes from "@/components/CodeTypes";
+import CodeType from "@/components/CodeType";
 export default function TabCodeTypesScreen() {
-  return <CodeTypes />;
+  return <CodeType />;
 }
