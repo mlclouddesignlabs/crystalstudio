@@ -11,7 +11,7 @@ class Fetcher {
       return this.instance;
     }
     //let baseURL: string = "http://192.168.0.151";
-    //let baseURL: string = "http://localhost";
+    //let baseURL: string = "http://127.0.0.1";
     let baseURL: string = "http://10.0.2.2";
     let port: number = 3000;
 

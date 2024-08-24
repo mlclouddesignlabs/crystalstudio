@@ -284,6 +284,11 @@
       "shortCode": "NEW2CT",
       "description": "sNACKBAR WOULD BE SHOWN",
       "id": 57
+    },
+    {
+      "shortCode": "NEW3CT",
+      "description": "Saving Third Code Type With Table As View",
+      "id": 58
     }
   ]
 }

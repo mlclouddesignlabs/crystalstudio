@@ -1,11 +1,20 @@
 import SVCHelper from "@/core/service";
 import React, { useEffect } from "react";
 import { StyleSheet } from "react-native";
-import { Button, Modal, Portal, Snackbar, Surface } from "react-native-paper";
+import {
+  Button,
+  Modal,
+  Portal,
+  Snackbar,
+  Surface,
+  TextInput,
+} from "react-native-paper";
 import CodeTypeInputs from "../CodeTypeInputs";
 import CodeTypesList from "../CodeTypesList";
 import { View } from "../Themed";
 import { ICodeType } from "./types";
+import CodeTypeTable from "../CodeTypesTable";
+import CodeTypeFilter from "../CodeTypeFilter";
 
 interface ICodeTypeInputsProps {}
 
@@ -14,6 +23,7 @@ const CodeTypes: React.FC<ICodeTypeInputsProps> = () => {
     React.useState(false);
   const [showSnackBar, setShowSnackBar] = React.useState(false);
   const [codeTypes, setCodeTypes] = React.useState<ICodeType[]>([]);
+  const [codeTypesOrig, setCodeTypesOrig] = React.useState<ICodeType[]>([]);
 
   useEffect(() => {
     fetchCodeTypes();
@@ -23,6 +33,7 @@ const CodeTypes: React.FC<ICodeTypeInputsProps> = () => {
     // console.log(Constants.manifest2);
     SVCHelper.get("/codeTypes?_sort=id&_order=desc").then((data) => {
       setCodeTypes(data);
+      setCodeTypesOrig(data);
     });
   };
 
@@ -31,6 +42,23 @@ const CodeTypes: React.FC<ICodeTypeInputsProps> = () => {
       setCodeTypes([{ ...data }, ...codeTypes]);
       setShowSnackBar(true);
     });
+  };
+
+  const handleFilteringCodeTypes = (key: string) => {
+    if (!key) {
+      setCodeTypes(codeTypesOrig);
+    }
+
+    let searchKey = key.toLowerCase();
+
+    setCodeTypes(
+      codeTypesOrig.filter(({ shortCode, description }) => {
+        return (
+          shortCode.toLowerCase().includes(searchKey) ||
+          description.toLowerCase().includes(searchKey)
+        );
+      })
+    );
   };
 
   const showCodeTypeInputs = () => setIsCodeInputsModalVisible(true);
@@ -50,7 +78,9 @@ const CodeTypes: React.FC<ICodeTypeInputsProps> = () => {
           />
         </Modal>
       </Portal>
-      <CodeTypesList codeTypes={codeTypes} />
+      <CodeTypeFilter onFilter={handleFilteringCodeTypes} />
+      {/* <CodeTypesList codeTypes={codeTypes} /> */}
+      <CodeTypeTable codeTypes={codeTypes} />
       <Surface elevation={2} style={styles.buttonContainer}>
         <Snackbar visible={showSnackBar} onDismiss={dismissSnackBar}>
           Code Type added successfully.
