@@ -1,0 +1,36 @@
+import React from "react";
+import { FlatList, StyleSheet } from "react-native";
+import { Avatar, Card, Text } from "react-native-paper";
+import { ICodeType } from "../CodeTypes/types";
+
+interface ICodeTypesListItemProps {
+  codeType: ICodeType;
+}
+
+const CodeTypesListItem: React.FC<ICodeTypesListItemProps> = React.memo(
+  ({ codeType }) => {
+    return (
+      <Card style={styles.cardStyle}>
+        <Card.Title
+          title={codeType.shortCode}
+          left={(props) => <Avatar.Icon {...props} icon="record-circle" />}
+        />
+        <Card.Content>
+          <Text variant={"bodySmall"}>{codeType.description}</Text>
+        </Card.Content>
+      </Card>
+    );
+  }
+);
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  codeTypesListContainer: {
+    flex: 1,
+  },
+  cardStyle: { padding: 5, marginVertical: 2 },
+});
+
+export default CodeTypesListItem;

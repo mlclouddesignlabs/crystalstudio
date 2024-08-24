@@ -12,9 +12,15 @@ import {
 import { ICodeType } from "../CodeTypes/types";
 import { CodeTypesFormFields } from "./types";
 
-interface ICodeTypesProps {}
+interface ICodeTypesProps {
+  onSaveClick: (updatedCodeType: ICodeType) => Promise<void>;
+  dismissModal: () => void;
+}
 
-const CodeTypes: React.FC<ICodeTypesProps> = () => {
+const CodeTypes: React.FC<ICodeTypesProps> = ({
+  onSaveClick,
+  dismissModal,
+}) => {
   const [codeType, setCodeType] = React.useState<ICodeType>({
     shortCode: "",
     description: "",
@@ -24,9 +30,14 @@ const CodeTypes: React.FC<ICodeTypesProps> = () => {
     const newCodeType = {
       ...codeType,
     };
-
     newCodeType[fieldName] = val;
     setCodeType(newCodeType);
+  };
+
+  const handleSavePress = () => {
+    onSaveClick(codeType).then(() => {
+      dismissModal();
+    });
   };
 
   return (
@@ -43,7 +54,6 @@ const CodeTypes: React.FC<ICodeTypesProps> = () => {
         onChangeText={(text) => handleChange(text, "shortCode")}
         style={styles.inputs}
       />
-
       <TextInput
         multiline
         numberOfLines={6}
@@ -53,11 +63,7 @@ const CodeTypes: React.FC<ICodeTypesProps> = () => {
         style={styles.inputs}
       />
       <Divider bold={true} style={styles.separator} />
-      <Button
-        icon="content-save"
-        mode="contained"
-        onPress={() => console.log("Pressed")}
-      >
+      <Button icon="content-save" mode="contained" onPress={handleSavePress}>
         Save
       </Button>
     </Surface>

@@ -10,7 +10,7 @@ class Fetcher {
     if (this.instance) {
       return this.instance;
     }
-    // let baseURL: string = "http://192.168.0.151";
+    //let baseURL: string = "http://192.168.0.151";
     //let baseURL: string = "http://localhost";
     let baseURL: string = "http://10.0.2.2";
     let port: number = 3000;
@@ -39,18 +39,21 @@ class Fetcher {
   async post(url: string, data: any) {
     try {
       const completeURL = `${this.baseUrl}${url}`;
-      const response = await fetch(completeURL, {
+      const postReqOpt = {
         method: "POST",
         body: JSON.stringify(data),
         headers: {
           "Content-Type": "application/json",
         },
-      });
-      if (response.status === 200) {
-        console.log("request - GET - ", completeURL, " - SUCCESS");
+      };
+      const response = await fetch(completeURL, postReqOpt);
+      if (response.status === 200 || response.status === 201) {
+        console.log("request - POST - ", completeURL, " - SUCCESS");
         return response.json();
       } else {
         console.log(response);
+        console.log("Post Req Payload");
+        console.log(postReqOpt);
         throw new Error(`Service Error : Status Code - ${response.status}`);
       }
     } catch (ex) {
