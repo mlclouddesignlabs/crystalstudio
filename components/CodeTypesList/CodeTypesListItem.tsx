@@ -24,12 +24,6 @@ const CodeTypesListItem: React.FC<ICodeTypesListItemProps> = React.memo(
 );
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  codeTypesListContainer: {
-    flex: 1,
-  },
   cardStyle: { padding: 5, marginVertical: 2 },
 });
 

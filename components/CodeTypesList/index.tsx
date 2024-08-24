@@ -1,6 +1,6 @@
 import React from "react";
 import { FlatList, StyleSheet } from "react-native";
-import { Avatar, Card, Surface, Text } from "react-native-paper";
+import { Surface } from "react-native-paper";
 import { ICodeType } from "../CodeTypes/types";
 import CodeTypesListItem from "./CodeTypesListItem";
 
@@ -27,7 +27,6 @@ const styles = StyleSheet.create({
   codeTypesListContainer: {
     flex: 1,
   },
-  cardStyle: { padding: 5, marginVertical: 2 },
 });
 
 export default CodeTypesList;
