@@ -10,7 +10,7 @@ interface ICodeTypesListItemProps {
 const CodeTypesListItem: React.FC<ICodeTypesListItemProps> = React.memo(
   ({ codeType }) => {
     return (
-      <Card style={styles.cardStyle}>
+      <Card style={styles.cardStyle} key={codeType.id}>
         <Card.Title
           title={codeType.shortCode}
           left={(props) => <Avatar.Icon {...props} icon="record-circle" />}
