@@ -3,6 +3,7 @@ import { ICodeType } from "../CodeType/types";
 import { DataTable, Surface, TextInput, Text } from "react-native-paper";
 import { ScrollView } from "react-native";
 import { FlatList, StyleSheet } from "react-native";
+import CodeTypeTableRow from "./CodeTypeTableRow";
 
 interface ICodeTypeTableProps {
   codeTypes: ICodeType[];
@@ -30,21 +31,7 @@ const CodeTypeTable: React.FC<ICodeTypeTableProps> = React.memo(
           </DataTable.Header>
           <ScrollView>
             {codeTypes?.map((codeType) => (
-              <DataTable.Row key={codeType.id} style={styles.dataTableRow}>
-                <DataTable.Cell
-                  maxFontSizeMultiplier={6}
-                  style={styles.denseCol}
-                >
-                  <Text variant="bodySmall" style={styles.titleText}>
-                    {codeType.shortCode}
-                  </Text>
-                </DataTable.Cell>
-                <DataTable.Cell>
-                  <Text variant="bodySmall" style={styles.titleText}>
-                    {codeType.description}{" "}
-                  </Text>
-                </DataTable.Cell>
-              </DataTable.Row>
+              <CodeTypeTableRow codeType={codeType} />
             ))}
           </ScrollView>
         </DataTable>
@@ -61,7 +48,6 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   dataTableHeader: { minHeight: 40 },
-  dataTableRow: { borderColor: "rgba(0,0,0,0.5)" },
   titleText: {
     color: "black",
   },
